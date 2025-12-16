@@ -1,0 +1,215 @@
+<div
+  class="min-h-screen bg-gradient-to-br from-orange-400 via-red-500 to-yellow-500 flex items-center justify-center p-4 py-8 relative overflow-hidden">
+  <!-- Animated Background -->
+  <div class="absolute inset-0 opacity-10">
+    <div
+      class="absolute top-10 right-10 w-64 h-64 bg-white rounded-full mix-blend-overlay filter blur-3xl animate-pulse">
+    </div>
+    <div
+      class="absolute bottom-10 left-10 w-80 h-80 bg-yellow-200 rounded-full mix-blend-overlay filter blur-3xl animate-pulse">
+    </div>
+  </div>
+
+  <div class="relative z-10 w-full max-w-2xl">
+    <!-- Header Card -->
+    <div class="glass-card rounded-t-2xl px-6 py-5 flex items-center justify-between animate-slide-up">
+      <button (click)="goBack()"
+        class="text-orange-600 hover:text-orange-700 transition-colors p-2 rounded-lg hover:bg-white/50">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+      <div class="text-center flex-1">
+        <h2 class="text-2xl font-bold text-gray-800">Vendor Registration</h2>
+        <p class="text-sm text-gray-600 mt-1">Join the Bhagona Family</p>
+      </div>
+      <div class="w-10"></div>
+    </div>
+
+    <!-- Form Card -->
+    <form [formGroup]="form" (ngSubmit)="submit()"
+      class="glass-card rounded-b-2xl md:p-8 p-2 space-y-5 animate-fade-in ">
+      <!-- Full Name & Business Name Row -->
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="space-y-2">
+          <label class="text-sm font-semibold text-gray-700">Contact Person Name *</label>
+          <input formControlName="fullName" type="text" placeholder="Your full name" class="input-premium" />
+          <div *ngIf="form.get('fullName')?.invalid && form.get('fullName')?.touched"
+            class="text-red-500 text-xs flex items-center gap-1">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd"
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                clip-rule="evenodd" />
+            </svg>
+            <span>Full name is required</span>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <label class="text-sm font-semibold text-gray-700">Business Name *</label>
+          <input formControlName="businessName" type="text" placeholder="Your business name" class="input-premium" />
+          <div *ngIf="form.get('businessName')?.invalid && form.get('businessName')?.touched"
+            class="text-red-500 text-xs flex items-center gap-1">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd"
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                clip-rule="evenodd" />
+            </svg>
+            <span>Business name is required</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="space-y-2">
+        <label class="text-sm font-semibold text-gray-700">Email Address *</label>
+        <input formControlName="email" type="email" placeholder="your.email@example.com" class="input-premium" />
+        <div *ngIf="form.get('email')?.invalid && form.get('email')?.touched"
+          class="text-red-500 text-xs flex items-center gap-1">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd"
+              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+              clip-rule="evenodd" />
+          </svg>
+          <span>Enter a valid email address</span>
+        </div>
+      </div>
+
+      <!-- Mobile & Experience Row -->
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="space-y-2">
+          <label class="text-sm font-semibold text-gray-700">Mobile Number *</label>
+          <input formControlName="mobile" type="tel" placeholder="10-digit number" class="input-premium"
+            maxlength="10" />
+          <div *ngIf="form.get('mobile')?.invalid && form.get('mobile')?.touched"
+            class="text-red-500 text-xs flex items-center gap-1">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd"
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                clip-rule="evenodd" />
+            </svg>
+            <span>Enter valid 10-digit number</span>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <label class="text-sm font-semibold text-gray-700">Years of Experience *</label>
+          <input formControlName="experience" type="number" placeholder="Business years" class="input-premium"
+            min="0" />
+          <div *ngIf="form.get('experience')?.invalid && form.get('experience')?.touched"
+            class="text-red-500 text-xs flex items-center gap-1">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd"
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                clip-rule="evenodd" />
+            </svg>
+            <span>Experience is required</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Services -->
+      <div class="space-y-2">
+        <label class="text-sm font-semibold text-gray-700">Services Offered *</label>
+        <div class="relative">
+          <button type="button" (click)="toggleDropdown()"
+            class="input-premium flex justify-between items-center cursor-pointer hover:border-orange-400">
+            <span [class.text-gray-400]="selectedServices.length === 0">
+              {{ selectedServices.length > 0 ? selectedServices.join(', ') : 'Select your services' }}
+            </span>
+            <svg class="w-5 h-5 text-gray-500 transition-transform" [class.rotate-180]="dropdownOpen" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+
+          <!-- Dropdown Menu -->
+          <div *ngIf="dropdownOpen"
+            class="absolute z-20 mt-2 w-full glass-card rounded-xl shadow-2xl max-h-56 overflow-y-auto animate-scale-in">
+            <div *ngFor="let service of servicesList"
+              class="flex items-center px-4 py-3 hover:bg-orange-50 cursor-pointer transition-colors first:rounded-t-xl last:rounded-b-xl"
+              (click)="toggleService(service)">
+              <div class="flex items-center justify-center w-5 h-5 rounded border-2 transition-all mr-3"
+                [class.bg-gradient-to-br]="selectedServices.includes(service)"
+                [class.from-orange-500]="selectedServices.includes(service)"
+                [class.to-red-600]="selectedServices.includes(service)"
+                [class.border-orange-500]="selectedServices.includes(service)"
+                [class.border-gray-300]="!selectedServices.includes(service)">
+                <svg *ngIf="selectedServices.includes(service)" class="w-3 h-3 text-white" fill="currentColor"
+                  viewBox="0 0 20 20">
+                  <path fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd" />
+                </svg>
+              </div>
+              <span class="text-gray-700 font-medium">{{ service }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Selected Chips -->
+        <div class="flex flex-wrap gap-2 mt-3" *ngIf="selectedServices.length > 0">
+          <div *ngFor="let service of selectedServices"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all hover:scale-105"
+            style="background: linear-gradient(135deg, #ff6b35 0%, #f97316 100%); color: white; box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);">
+            <span>{{ service }}</span>
+            <button type="button" (click)="removeService(service)"
+              class="hover:bg-white/20 rounded-full p-0.5 transition-colors">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="selectedServices.length === 0 && form.get('services')?.touched"
+          class="text-red-500 text-xs flex items-center gap-1">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd"
+              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+              clip-rule="evenodd" />
+          </svg>
+          <span>Please select at least one service</span>
+        </div>
+      </div>
+
+      <!-- Address -->
+      <div class="space-y-2">
+        <label class="text-sm font-semibold text-gray-700">Complete Address *</label>
+        <input formControlName="address" type="text" placeholder="Street, City, State, Pincode" class="input-premium" />
+        <div *ngIf="form.get('address')?.invalid && form.get('address')?.touched"
+          class="text-red-500 text-xs flex items-center gap-1">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd"
+              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+              clip-rule="evenodd" />
+          </svg>
+          <span>Address is required</span>
+        </div>
+      </div>
+
+      <!-- About Business -->
+      <div class="space-y-2">
+        <label class="text-sm font-semibold text-gray-700">About Your Business</label>
+        <textarea formControlName="description" placeholder="Describe your business, services, and unique offerings..."
+          class="input-premium min-h-[100px] resize-none" rows="4"></textarea>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="pt-4">
+        <button type="submit" [disabled]="form.invalid"
+          class="btn-premium w-full text-white text-lg rounded-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-md group">
+          <span class="flex items-center justify-center gap-2">
+            <span>Complete Registration</span>
+            <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,86 @@
+<div
+  class="min-h-screen bg-gradient-to-br from-orange-400 via-red-500 to-yellow-500 flex items-center justify-center p-4 relative overflow-hidden">
+  <!-- Animated Background Elements -->
+  <div class="absolute inset-0 opacity-20">
+    <div
+      class="absolute top-20 left-20 w-72 h-72 bg-white rounded-full mix-blend-overlay filter blur-3xl animate-pulse">
+    </div>
+    <div
+      class="absolute bottom-20 right-20 w-96 h-96 bg-yellow-200 rounded-full mix-blend-overlay filter blur-3xl animate-pulse delay-1000">
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <div class="relative z-10 w-full max-w-4xl animate-slide-up">
+    <!-- Header Section -->
+    <div class="text-center mb-10 animate-fade-in">
+      <h1 class="text-5xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">
+        Join the <span class="animate-pulse">Bhagona</span> Family
+      </h1>
+      <p class="text-lg md:text-xl text-white/90 font-medium">
+        Start your journey as a Chef or Vendor today
+      </p>
+    </div>
+
+    <!-- Role Selection Cards -->
+    <div class="grid md:grid-cols-2 gap-6">
+      <!-- Chef Card -->
+      <div (click)="navigateToChef()"
+        class="glass-card rounded-2xl p-8 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl group animate-scale-in">
+        <div class="text-center space-y-4">
+          <!-- Chef Icon -->
+          <div
+            class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-br from-orange-500 to-red-600 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+            <!-- Cooking Pan & Utensils SVG -->
+            <svg class="w-14 h-14 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M8.1,13.34L3.91,9.16C2.35,7.59 2.35,5.06 3.91,3.5L10.93,10.5L8.1,13.34M14.88,11.53C14.58,11.24 14.58,10.76 14.88,10.47L18.24,7.1L19.66,8.5L16.29,11.86C16,12.15 15.5,12.15 15.21,11.86L14.88,11.53M16.29,5.68L19.66,2.32L21.78,4.44L18.41,7.8L16.29,5.68M13.85,11.21L12.43,9.79L13.86,8.36L15.28,9.78L13.85,11.21M14.37,8.36L13.85,7.84L14.37,7.32C14.66,7.03 15.14,7.03 15.43,7.32L15.96,7.85L14.37,8.36M11.5,7L14,9.5L12.6,10.91L10.09,8.4L11.5,7M12.41,5.58L11,7L9.56,5.55L10.97,4.15C11.26,3.85 11.74,3.85 12.03,4.15L12.56,4.68C12.85,4.97 12.85,5.45 12.56,5.74L12.41,5.58M19.66,11.92V21C19.66,21.5 19.26,22 18.66,22H5.66C5.06,22 4.66,21.5 4.66,21V11.92L12.16,19.42L19.66,11.92Z" />
+            </svg>
+          </div>
+
+          <h3 class="text-2xl font-bold text-gray-800">Chef</h3>
+          <p class="text-gray-600 text-sm">
+            Share your culinary expertise and create unforgettable dining experiences
+          </p>
+
+          <div class="flex items-center justify-center gap-2 text-orange-600 font-semibold">
+            <span>Register Now</span>
+            <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vendor Card -->
+      <div (click)="navigateToVendor()"
+        class="glass-card rounded-2xl p-8 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl group animate-scale-in"
+        style="animation-delay: 0.1s">
+        <div class="text-center space-y-4">
+          <!-- Vendor Icon -->
+          <div
+            class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-br from-yellow-500 to-orange-600 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+            <!-- Store/Shop SVG -->
+            <svg class="w-14 h-14 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12,18H6V14H12M21,14V12L20,7H4L3,12V14H4V20H14V14H18V20H20V14M20,4H4V6H20V4Z" />
+            </svg>
+          </div>
+
+          <h3 class="text-2xl font-bold text-gray-800">Vendor</h3>
+          <p class="text-gray-600 text-sm">
+            Provide quality services and grow your business with us
+          </p>
+
+          <div class="flex items-center justify-center gap-2 text-orange-600 font-semibold">
+            <span>Register Now</span>
+            <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
