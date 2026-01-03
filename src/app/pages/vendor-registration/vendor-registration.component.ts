@@ -17,6 +17,7 @@ export class VendorRegistrationComponent {
   servicesList = ['Food Supply', 'Event Catering', 'Kitchen Equipment', 'Logistics'];
   selectedServices: string[] = [];
   dropdownOpen = false;
+  showPassword = false;
 
   constructor(
     private fb: FormBuilder,
@@ -31,6 +32,7 @@ export class VendorRegistrationComponent {
       businessName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       mobile: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
       experience: ['', Validators.required],
       address: ['', Validators.required],
       description: [''],
@@ -58,6 +60,10 @@ export class VendorRegistrationComponent {
 
   goBack() {
     this.router.navigate(['/']);
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 
   submit() {

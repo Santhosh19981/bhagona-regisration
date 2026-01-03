@@ -17,6 +17,7 @@ export class ChefRegistrationComponent {
   cookingStyles = ['Indian', 'Continental', 'Fusion', 'Street Food'];
   selectedStyles: string[] = [];
   dropdownOpen = false;
+  showPassword = false;
 
   constructor(private fb: FormBuilder, private api: ApiService, private router: Router, private toastr: ToastrService) {
 
@@ -27,6 +28,7 @@ export class ChefRegistrationComponent {
       fullName: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       mobile: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
       age: ['', [Validators.required, Validators.min(18)]],
       experience: ['', [Validators.required, Validators.min(0)]],
       cookingStyle: [[], Validators.required],
@@ -79,6 +81,10 @@ export class ChefRegistrationComponent {
 
   goBack() {
     this.router.navigate(['/']);
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 
   submit() {
