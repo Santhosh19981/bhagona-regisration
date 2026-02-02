@@ -14,10 +14,9 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ChefRegistrationComponent {
   form!: FormGroup;
-  cookingStyles = ['Indian', 'Continental', 'Fusion', 'Street Food'];
-  selectedStyles: string[] = [];
-  dropdownOpen = false;
   showPassword = false;
+  selectedFile: File | null = null;
+  imagePreview: string | null = null;
 
   constructor(private fb: FormBuilder, private api: ApiService, private router: Router, private toastr: ToastrService) {
 
@@ -31,7 +30,6 @@ export class ChefRegistrationComponent {
       password: ['', [Validators.required, Validators.minLength(6)]],
       age: ['', [Validators.required, Validators.min(18)]],
       experience: ['', [Validators.required, Validators.min(0)]],
-      cookingStyle: [[], Validators.required],
       address: ['', Validators.required],
       declaration: ['']
     }, { validators: this.experienceValidator });
@@ -61,23 +59,7 @@ export class ChefRegistrationComponent {
     return null;
   }
 
-  toggleDropdown() {
-    this.dropdownOpen = !this.dropdownOpen;
-  }
 
-  toggleStyle(style: string) {
-    if (this.selectedStyles.includes(style)) {
-      this.selectedStyles = this.selectedStyles.filter(s => s !== style);
-    } else {
-      this.selectedStyles.push(style);
-    }
-    this.form.patchValue({ cookingStyle: this.selectedStyles });
-  }
-
-  removeStyle(style: string) {
-    this.selectedStyles = this.selectedStyles.filter(s => s !== style);
-    this.form.patchValue({ cookingStyle: this.selectedStyles });
-  }
 
   goBack() {
     this.router.navigate(['/']);
@@ -87,24 +69,50 @@ export class ChefRegistrationComponent {
     this.showPassword = !this.showPassword;
   }
 
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        this.toastr.warning('File size should be less than 5MB');
+        return;
+      }
+      this.selectedFile = file;
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   submit() {
     if (this.form.valid) {
-      const payload = {
-        ...this.form.value,
-        role: 2, // ✅ cheff role
-        cookingStyle: this.selectedStyles.join(', '),
-      };
+      const formData = new FormData();
 
-      this.api.addUser(payload).subscribe({
+      // Append all form fields
+      Object.keys(this.form.value).forEach(key => {
+        formData.append(key, this.form.value[key]);
+      });
+
+      // Append additional fields
+      formData.append('role', '2');
+      formData.append('cookingStyle', '');
+
+      // Append image if selected
+      if (this.selectedFile) {
+        formData.append('image', this.selectedFile);
+      }
+
+      this.api.addUser(formData).subscribe({
         next: (res: any) => {
           this.toastr.success('🎉 Chef Registered Successfully!');
           this.form.reset();
-          this.selectedStyles = [];
+          this.selectedFile = null;
+          this.imagePreview = null;
           this.router.navigate(['/']);
         },
         error: (err) => {
           console.log('Error:', err);
-          // Extract error message from API response
           const message = err?.error?.message || err?.message || 'Something went wrong';
           this.toastr.error(message);
         }

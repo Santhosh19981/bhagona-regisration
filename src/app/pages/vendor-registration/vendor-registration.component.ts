@@ -18,6 +18,8 @@ export class VendorRegistrationComponent {
   selectedServices: string[] = [];
   dropdownOpen = false;
   showPassword = false;
+  selectedFile: File | null = null;
+  imagePreview: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -66,24 +68,54 @@ export class VendorRegistrationComponent {
     this.showPassword = !this.showPassword;
   }
 
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        this.toastr.warning('File size should be less than 5MB');
+        return;
+      }
+      this.selectedFile = file;
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   submit() {
     if (this.form.valid) {
-      const payload = {
-        ...this.form.value,
-        role: 3, // ✅ Vendor role
-        services: this.selectedServices
-      };
+      const formData = new FormData();
 
-      this.api.addUser(payload).subscribe({
+      // Append all form fields
+      Object.keys(this.form.value).forEach(key => {
+        if (key === 'services') {
+          formData.append(key, this.selectedServices.join(', '));
+        } else {
+          formData.append(key, this.form.value[key]);
+        }
+      });
+
+      // Append additional fields
+      formData.append('role', '3');
+
+      // Append image if selected
+      if (this.selectedFile) {
+        formData.append('image', this.selectedFile);
+      }
+
+      this.api.addUser(formData).subscribe({
         next: (res: any) => {
           this.toastr.success('🎉 Vendor Registered Successfully!');
           this.form.reset();
           this.selectedServices = [];
+          this.selectedFile = null;
+          this.imagePreview = null;
           this.router.navigate(['/']);
         },
         error: (err) => {
           console.log('Error:', err);
-          // Extract error message from API response
           const message = err?.error?.message || err?.message || 'Something went wrong';
           this.toastr.error(message);
         }
