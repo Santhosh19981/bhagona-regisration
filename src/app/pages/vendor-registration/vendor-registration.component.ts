@@ -14,8 +14,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class VendorRegistrationComponent {
   form!: FormGroup;
-  servicesList = ['Food Supply', 'Event Catering', 'Kitchen Equipment', 'Logistics'];
-  selectedServices: string[] = [];
+  servicesList: any[] = [];
+  selectedServices: any[] = [];
   dropdownOpen = false;
   showPassword = false;
   selectedFile: File | null = null;
@@ -40,24 +40,48 @@ export class VendorRegistrationComponent {
       description: [''],
       services: [[], Validators.required]
     });
+
+    this.loadServices();
+  }
+
+  loadServices() {
+    this.api.getServices().subscribe({
+      next: (res: any) => {
+        if (res.status === 'success') {
+          this.servicesList = res.data;
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching services:', err);
+      }
+    });
   }
 
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
-  toggleService(service: string) {
-    if (this.selectedServices.includes(service)) {
-      this.selectedServices = this.selectedServices.filter(s => s !== service);
+  toggleService(service: any) {
+    const index = this.selectedServices.findIndex(s => s.service_id === service.service_id);
+    if (index > -1) {
+      this.selectedServices.splice(index, 1);
     } else {
       this.selectedServices.push(service);
     }
     this.form.patchValue({ services: this.selectedServices });
   }
 
-  removeService(service: string) {
-    this.selectedServices = this.selectedServices.filter(s => s !== service);
+  removeService(service: any) {
+    this.selectedServices = this.selectedServices.filter(s => s.service_id !== service.service_id);
     this.form.patchValue({ services: this.selectedServices });
+  }
+
+  getSelectedServiceNames(): string {
+    return this.selectedServices.map(s => s.name).join(', ');
+  }
+
+  isServiceSelected(service: any): boolean {
+    return this.selectedServices.some(s => s.service_id === service.service_id);
   }
 
   goBack() {
@@ -91,7 +115,9 @@ export class VendorRegistrationComponent {
       // Append all form fields
       Object.keys(this.form.value).forEach(key => {
         if (key === 'services') {
-          formData.append(key, this.selectedServices.join(', '));
+          // Send as comma-separated IDs
+          const serviceIds = this.selectedServices.map(s => s.service_id).join(',');
+          formData.append(key, serviceIds);
         } else {
           formData.append(key, this.form.value[key]);
         }

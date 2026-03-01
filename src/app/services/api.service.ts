@@ -14,4 +14,8 @@ export class ApiService {
   addUser(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/addUser`, data);
   }
+
+  getServices(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/services`);
+  }
 }

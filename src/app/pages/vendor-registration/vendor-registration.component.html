@@ -149,7 +149,7 @@
           <button type="button" (click)="toggleDropdown()"
             class="input-premium flex justify-between items-center cursor-pointer hover:border-orange-400">
             <span [class.text-gray-400]="selectedServices.length === 0">
-              {{ selectedServices.length > 0 ? selectedServices.join(', ') : 'Select your services' }}
+              {{ selectedServices.length > 0 ? getSelectedServiceNames() : 'Select your services' }}
             </span>
             <svg class="w-5 h-5 text-gray-500 transition-transform" [class.rotate-180]="dropdownOpen" fill="none"
               stroke="currentColor" viewBox="0 0 24 24">
@@ -164,19 +164,19 @@
               class="flex items-center px-4 py-3 hover:bg-orange-50 cursor-pointer transition-colors first:rounded-t-xl last:rounded-b-xl"
               (click)="toggleService(service)">
               <div class="flex items-center justify-center w-5 h-5 rounded border-2 transition-all mr-3"
-                [class.bg-gradient-to-br]="selectedServices.includes(service)"
-                [class.from-orange-500]="selectedServices.includes(service)"
-                [class.to-red-600]="selectedServices.includes(service)"
-                [class.border-orange-500]="selectedServices.includes(service)"
-                [class.border-gray-300]="!selectedServices.includes(service)">
-                <svg *ngIf="selectedServices.includes(service)" class="w-3 h-3 text-white" fill="currentColor"
+                [class.bg-gradient-to-br]="isServiceSelected(service)"
+                [class.from-orange-500]="isServiceSelected(service)"
+                [class.to-red-600]="isServiceSelected(service)"
+                [class.border-orange-500]="isServiceSelected(service)"
+                [class.border-gray-300]="!isServiceSelected(service)">
+                <svg *ngIf="isServiceSelected(service)" class="w-3 h-3 text-white" fill="currentColor"
                   viewBox="0 0 20 20">
                   <path fill-rule="evenodd"
                     d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
                     clip-rule="evenodd" />
                 </svg>
               </div>
-              <span class="text-gray-700 font-medium">{{ service }}</span>
+              <span class="text-gray-700 font-medium">{{ service.name }}</span>
             </div>
           </div>
         </div>
@@ -186,7 +186,7 @@
           <div *ngFor="let service of selectedServices"
             class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all hover:scale-105"
             style="background: linear-gradient(135deg, #ff6b35 0%, #f97316 100%); color: white; box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);">
-            <span>{{ service }}</span>
+            <span>{{ service.name }}</span>
             <button type="button" (click)="removeService(service)"
               class="hover:bg-white/20 rounded-full p-0.5 transition-colors">
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
