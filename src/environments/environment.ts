@@ -1,4 +1,5 @@
 export const environment = {
     production: false,
-    apiUrl: 'https://bhagona-backend-v2.vercel.app'
+    qa: false,
+    apiUrl: 'http://localhost:3000'
 };
