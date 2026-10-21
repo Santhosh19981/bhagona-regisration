@@ -7,7 +7,18 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class ApiService {
-  private baseUrl = environment.apiUrl;
+  get baseUrl(): string {
+    if (typeof window !== 'undefined' && window.location) {
+      const host = (window.location.hostname || '').toLowerCase();
+      if (host === 'registration.bhagona.in' || host === 'bhagona.in') {
+        return 'https://api.bhagona.in';
+      }
+      if (host === 'localhost' || host === '127.0.0.1' || host.includes('qa')) {
+        return 'https://qa-api.bhagona.in';
+      }
+    }
+    return environment.apiUrl || 'https://qa-api.bhagona.in';
+  }
 
   constructor(private http: HttpClient) { }
 
